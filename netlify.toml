@@ -1,0 +1,3 @@
+[build]
+  base = "web_descarga_apk"
+  publish = "public"
