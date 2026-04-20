@@ -43,20 +43,55 @@ public class HomeFragment extends Fragment {
         binding.recyclerRecent.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerRecent.setAdapter(adapter);
 
-        // Observar los últimos escaneos de la base de datos
+        setupChips();
+
+        loadDocuments(null);
+    }
+
+    private void setupChips() {
+        binding.chipUniversity.setOnClickListener(v -> toggleFilter("Universidad", binding.chipUniversity));
+        binding.chipWork.setOnClickListener(v -> toggleFilter("Trabajo", binding.chipWork));
+        binding.chipPersonal.setOnClickListener(v -> toggleFilter("Personal", binding.chipPersonal));
+        binding.chipIdeas.setOnClickListener(v -> toggleFilter("Ideas", binding.chipIdeas));
+    }
+
+    private String currentFilter = null;
+    private View lastSelectedChip = null;
+
+    private void toggleFilter(String category, View chip) {
+        if (category.equals(currentFilter)) {
+            currentFilter = null;
+            chip.setBackgroundResource(com.scannote.app.R.drawable.bg_category_chip);
+            lastSelectedChip = null;
+            loadDocuments(null);
+        } else {
+            if (lastSelectedChip != null) {
+                lastSelectedChip.setBackgroundResource(com.scannote.app.R.drawable.bg_category_chip);
+            }
+            currentFilter = category;
+            chip.setBackgroundResource(com.scannote.app.R.drawable.bg_category_chip_selected);
+            lastSelectedChip = chip;
+            loadDocuments(category);
+        }
+    }
+
+    private void loadDocuments(String filter) {
         AppDatabase db = AppDatabase.getDatabase(requireContext());
-        db.documentDao().getAllDocuments().observe(getViewLifecycleOwner(), documents -> {
+        LiveData<List<DocumentEntry>> liveData = (filter == null)
+                ? db.documentDao().getAllDocuments()
+                : db.documentDao().getDocumentsByType(filter);
+
+        liveData.observe(getViewLifecycleOwner(), documents -> {
             if (documents == null || documents.isEmpty()) {
                 binding.recyclerRecent.setVisibility(View.GONE);
                 binding.emptyState.setVisibility(View.VISIBLE);
-                binding.textScanCount.setText("Aún no tienes escaneos");
+                binding.textScanCount.setText(filter == null ? "Aún no tienes escaneos" : "No hay documentos en " + filter);
             } else {
                 binding.recyclerRecent.setVisibility(View.VISIBLE);
                 binding.emptyState.setVisibility(View.GONE);
-                // Mostrar solo los últimos 20
-                List<DocumentEntry> recent = documents.size() > 20
+                List<DocumentEntry> displayDocs = documents.size() > 20
                         ? documents.subList(0, 20) : documents;
-                adapter.submitList(recent);
+                adapter.submitList(displayDocs);
                 int count = documents.size();
                 binding.textScanCount.setText(count + (count == 1 ? " escaneo guardado" : " escaneos guardados"));
             }

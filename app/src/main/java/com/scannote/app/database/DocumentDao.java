@@ -25,4 +25,7 @@ public interface DocumentDao {
 
     @Query("SELECT * FROM documents WHERE title LIKE :search OR content LIKE :search")
     LiveData<List<DocumentEntry>> searchDocuments(String search);
+
+    @Query("SELECT * FROM documents WHERE type = :type ORDER BY timestamp DESC")
+    LiveData<List<DocumentEntry>> getDocumentsByType(String type);
 }

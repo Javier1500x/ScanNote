@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         "application/pdf",
                         "application/msword",
                         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                        "text/plain",
                         "image/*"
                     });
                 }
@@ -92,8 +93,14 @@ public class MainActivity extends AppCompatActivity {
             if (text != null && text.trim().length() > 50) {
                 saveAndOpenDocument(text, "Documento PDF");
             } else {
-                // Fallback a IA con imagen del PDF
                 processPdfWithAi(uri);
+            }
+        } else if (type != null && (type.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || type.equals("application/msword"))) {
+            String text = DocumentParser.extractTextFromDocx(this, uri);
+            if (text != null && !text.isEmpty()) {
+                saveAndOpenDocument(text, "Documento Word");
+            } else {
+                Toast.makeText(this, "No se pudo extraer texto del Word", Toast.LENGTH_SHORT).show();
             }
         } else if (type != null && type.startsWith("image/")) {
             processImageWithAi(uri);
@@ -152,17 +159,28 @@ public class MainActivity extends AppCompatActivity {
 
     private void saveAndOpenDocument(String text, String defaultTitle) {
         String title = defaultTitle + " " + new java.text.SimpleDateFormat("dd/MM", java.util.Locale.getDefault()).format(new java.util.Date());
-        DocumentEntry entry = new DocumentEntry(title, text, System.currentTimeMillis(), "Archivo", "General");
         
-        dbExecutor.execute(() -> {
-            AppDatabase.getDatabase(this).documentDao().insert(entry);
-            runOnUiThread(() -> {
-                Intent intent = new Intent(this, DocumentDetailActivity.class);
-                intent.putExtra("EXTRA_CONTENT", text);
-                intent.putExtra("EXTRA_TITLE", title);
-                startActivity(intent);
+        // Intentar categorizar automáticamente
+        geminiManager.suggestCategory(text).addListener(() -> {
+            String category = "General";
+            try {
+                GenerateContentResponse res = geminiManager.suggestCategory(text).get();
+                if (res.getText() != null) category = res.getText().trim();
+            } catch (Exception e) {}
+            
+            final String finalCat = category;
+            DocumentEntry entry = new DocumentEntry(title, text, System.currentTimeMillis(), finalCat, "General", "");
+            
+            dbExecutor.execute(() -> {
+                AppDatabase.getDatabase(this).documentDao().insert(entry);
+                runOnUiThread(() -> {
+                    Intent intent = new Intent(this, DocumentDetailActivity.class);
+                    intent.putExtra("EXTRA_CONTENT", text);
+                    intent.putExtra("EXTRA_TITLE", title);
+                    startActivity(intent);
+                });
             });
-        });
+        }, getMainExecutor());
     }
 
     @Override

@@ -86,7 +86,19 @@
                     android:paddingTop="4dp"
                     android:paddingBottom="4dp"
                     android:background="#1414B8A6"
-                    android:fontFamily="sans-serif-medium" />
+                    android:fontFamily="sans-serif-medium"
+                    android:foreground="?attr/selectableItemBackground" />
+
+                <ImageButton
+                    android:id="@+id/btn_smart_category"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_ai_keywords"
+                    android:tint="#14B8A6"
+                    android:padding="6dp"
+                    android:contentDescription="Categorizar con IA" />
             </LinearLayout>
 
             <!-- Tarjeta de texto escaneado -->
@@ -151,6 +163,32 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Campo de Tags -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ETIQUETAS PERSONALIZADAS"
+                    android:textColor="#475569"
+                    android:textSize="10sp"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="6dp" />
+                <EditText
+                    android:id="@+id/edit_tags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_search"
+                    android:hint="Ej: #examen, #importante"
+                    android:padding="12dp"
+                    android:textColor="#F1F5F9"
+                    android:textColorHint="#334155"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
             <!-- Sección herramientas IA -->
             <TextView
                 android:layout_width="wrap_content"
@@ -192,6 +230,7 @@
                     android:layout_width="0dp"
                     android:layout_height="52dp"
                     android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
                     android:text="Estudiar"
                     android:textColor="#FFFFFF"
                     android:textSize="13sp"
@@ -202,6 +241,23 @@
                     app:iconPadding="8dp"
                     app:iconTint="#6366F1"
                     app:strokeColor="#6366F140"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_flashcards"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="Tarjetas"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_keywords"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#FCD34D"
+                    app:strokeColor="#FCD34D40"
                     app:strokeWidth="1dp" />
             </LinearLayout>
 

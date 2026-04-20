@@ -13,12 +13,14 @@ public class DocumentEntry {
     public long timestamp;
     public String type; // "Book", "Document", "Receipt", etc.
     public String folderName;
+    public String tags;
 
-    public DocumentEntry(String title, String content, long timestamp, String type, String folderName) {
+    public DocumentEntry(String title, String content, long timestamp, String type, String folderName, String tags) {
         this.title = title;
         this.content = content;
         this.timestamp = timestamp;
         this.type = type;
         this.folderName = folderName;
+        this.tags = tags;
     }
 }

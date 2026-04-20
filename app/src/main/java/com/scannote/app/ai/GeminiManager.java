@@ -62,6 +62,20 @@ public class GeminiManager {
         return model.generateContent(content);
     }
 
+    public ListenableFuture<GenerateContentResponse> suggestCategory(String text) {
+        Content content = new Content.Builder()
+                .addText("Clasifica el siguiente texto en UNA de estas categorías: Universidad, Trabajo, Personal, Ideas, Estudio. Devuelve ÚNICAMENTE la palabra de la categoría, sin puntos ni explicaciones:\n\n" + text)
+                .build();
+        return model.generateContent(content);
+    }
+
+    public ListenableFuture<GenerateContentResponse> generateFlashcards(String text) {
+        Content content = new Content.Builder()
+                .addText("Genera 5 tarjetas de memoria (flashcards) para estudiar el siguiente texto. REGLA ESTRICTA: Devuelve ÚNICAMENTE código HTML puro. Cada tarjeta debe ser un <div class='card flashcard' onclick='this.classList.toggle(\"flipped\")'> con un <div class='front'> (pregunta) y un <div class='back'> (respuesta). El estilo debe permitir que al hacer clic se 'voltee' visualmente o cambie el contenido. Usa <h2> para la pregunta y <p> para la respuesta. NO uses markdown ni explicaciones:\n\n" + text)
+                .build();
+        return model.generateContent(content);
+    }
+
     public ListenableFuture<GenerateContentResponse> analyzeImage(Bitmap bitmap, String prompt) {
         Content content = new Content.Builder()
                 .addImage(bitmap)

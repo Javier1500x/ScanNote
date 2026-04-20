@@ -71,9 +71,30 @@ public class DocumentDetailActivity extends AppCompatActivity {
         // Botones IA
         binding.btnSummarize.setOnClickListener(v -> callGemini("summarize"));
         binding.btnStudy.setOnClickListener(v -> callGemini("study"));
+        binding.btnFlashcards.setOnClickListener(v -> callGemini("flashcards"));
         binding.btnCorrect.setOnClickListener(v -> callGemini("correct"));
         binding.btnKeywords.setOnClickListener(v -> callGemini("keywords"));
         binding.btnTranslate.setOnClickListener(v -> callGemini("translate"));
+
+        // TTS con voz más natural
+        tts = new TextToSpeech(this, status -> {
+            if (status != TextToSpeech.ERROR) {
+                // Intentar buscar una voz en español más natural
+                Locale loc = new Locale("es", "ES");
+                tts.setLanguage(loc);
+                
+                // Intentar seleccionar una voz de alta calidad si existe
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    for (android.speech.tts.Voice voice : tts.getVoices()) {
+                        if (voice.getLocale().getLanguage().equals("es") && voice.getQuality() == android.speech.tts.Voice.QUALITY_VERY_HIGH) {
+                            tts.setVoice(voice);
+                            break;
+                        }
+                    }
+                }
+                ttsReady = true;
+            }
+        });
 
         // Nuevas funciones
         binding.btnAskAi.setOnClickListener(v -> {
@@ -116,6 +137,43 @@ public class DocumentDetailActivity extends AppCompatActivity {
                 binding.btnTts.setText("Detener");
             }
         });
+
+        binding.chipCategory.setOnClickListener(v -> showCategorySelector());
+        binding.btnSmartCategory.setOnClickListener(v -> runSmartCategory());
+    }
+
+    private void showCategorySelector() {
+        String[] cats = {"Universidad", "Trabajo", "Personal", "Ideas", "Estudio", "Documento"};
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Seleccionar Categoría")
+            .setItems(cats, (dialog, which) -> {
+                updateCategory(cats[which]);
+            }).show();
+    }
+
+    private void updateCategory(String category) {
+        binding.chipCategory.setText(category);
+        // Aquí se debería actualizar en la DB también si tuviéramos el ID del documento original
+        // Por simplicidad, asumimos que este documento se guarda al salir o al exportar
+        Toast.makeText(this, "Categoría: " + category, Toast.LENGTH_SHORT).show();
+    }
+
+    private void runSmartCategory() {
+        String text = binding.editContent.getText().toString();
+        if (text.isEmpty()) return;
+        binding.progressAi.setVisibility(View.VISIBLE);
+        var future = geminiManager.suggestCategory(text);
+        Futures.addCallback(future, new FutureCallback<>() {
+            @Override
+            public void onSuccess(GenerateContentResponse result) {
+                runOnUiThread(() -> {
+                    binding.progressAi.setVisibility(View.GONE);
+                    String cat = result.getText();
+                    if (cat != null) updateCategory(cat.trim());
+                });
+            }
+            @Override public void onFailure(Throwable t) { runOnUiThread(() -> binding.progressAi.setVisibility(View.GONE)); }
+        }, getMainExecutor());
     }
 
     private void updateWordCount(String text) {
@@ -139,6 +197,7 @@ public class DocumentDetailActivity extends AppCompatActivity {
         switch (action) {
             case "summarize":  label = "📄 Resumen";            break;
             case "study":      label = "📚 Preguntas de Estudio"; break;
+            case "flashcards": label = "🎴 Tarjetas de Memoria"; break;
             case "correct":    label = "✏️ Texto Corregido";    break;
             case "keywords":   label = "🔑 Palabras Clave";     break;
             case "translate":  label = "🌐 Traducción";         break;
@@ -152,6 +211,7 @@ public class DocumentDetailActivity extends AppCompatActivity {
         var future = switch (action) {
             case "summarize" -> geminiManager.summarize(text);
             case "study"     -> geminiManager.generateExamQuestions(text);
+            case "flashcards"-> geminiManager.generateFlashcards(text);
             case "correct"   -> geminiManager.correctText(text);
             case "keywords"  -> geminiManager.extractKeywords(text);
             case "translate" -> geminiManager.translateText(text);
@@ -183,7 +243,11 @@ public class DocumentDetailActivity extends AppCompatActivity {
                             "body { background-color: transparent !important; color: #E2E8F0 !important; font-family: sans-serif; line-height: 1.6; padding: 0; margin: 0; }" +
                             "div:not(.card), p, span, li, ul, ol { color: #E2E8F0 !important; background-color: transparent !important; font-size: 15px !important; }" +
                             "h1, h2, h3, h4 { color: #38BDF8 !important; font-size: 18px !important; margin-top: 12px !important; margin-bottom: 8px !important; font-weight: 600 !important; background-color: transparent !important; }" +
-                            ".card { background-color: #1E293B !important; padding: 16px !important; border-radius: 12px !important; margin-bottom: 12px !important; border: 1px solid #334155 !important; color: #E2E8F0 !important; }" +
+                            ".card { background-color: #1E293B !important; padding: 16px !important; border-radius: 12px !important; margin-bottom: 12px !important; border: 1px solid #334155 !important; color: #E2E8F0 !important; transition: all 0.3s ease; }" +
+                            ".flashcard { cursor: pointer; perspective: 1000px; min-height: 120px; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; }" +
+                            ".flashcard .back { display: none; color: #14B8A6 !important; font-style: italic; }" +
+                            ".flashcard.flipped .front { display: none; }" +
+                            ".flashcard.flipped .back { display: block; }" +
                             "button { background: #334155 !important; color: white !important; border: 1px solid #475569 !important; padding: 12px 16px !important; border-radius: 8px !important; margin: 6px 0 !important; font-size: 14px !important; cursor: pointer; width: 100% !important; text-align: left !important; display: block !important; font-family: sans-serif !important; }" +
                             ".correct { background: #10B981 !important; color: white !important; border-color: #059669 !important; font-weight: bold !important; }" +
                             ".wrong { background: #EF4444 !important; color: white !important; border-color: #B91C1C !important; text-decoration: line-through !important; }" +
@@ -197,7 +261,23 @@ public class DocumentDetailActivity extends AppCompatActivity {
                         binding.webviewAiOutput.setBackgroundColor(android.graphics.Color.TRANSPARENT);
                         binding.webviewAiOutput.loadDataWithBaseURL(null, htmlTemplate, "text/html", "UTF-8", null);
                         binding.layoutAiOutput.setVisibility(View.VISIBLE);
+
+                        // Si es estudio, ofrecer guardar como sesión
+                        if (action.equals("study")) {
+                            saveAsStudySession(output);
+                        }
                     }
+                });
+            }
+
+            private void saveAsStudySession(String content) {
+                String title = "Sesión de Repaso " + new SimpleDateFormat("dd/MM", Locale.getDefault()).format(new Date());
+                com.scannote.app.database.DocumentEntry session = new com.scannote.app.database.DocumentEntry(
+                    title, content, System.currentTimeMillis(), "Estudio", "Estudio", ""
+                );
+                java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
+                    com.scannote.app.database.AppDatabase.getDatabase(getApplicationContext()).documentDao().insert(session);
+                    runOnUiThread(() -> Toast.makeText(DocumentDetailActivity.this, "Sesión de estudio guardada", Toast.LENGTH_SHORT).show());
                 });
             }
 

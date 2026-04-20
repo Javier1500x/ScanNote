@@ -31,6 +31,8 @@ public class CameraActivity extends AppCompatActivity {
     private static final String[] REQUIRED_PERMISSIONS = {Manifest.permission.CAMERA};
 
     private String lastDetectedText = "";
+    private StringBuilder accumulatedText = new StringBuilder();
+    private int pageCount = 0;
     private androidx.activity.result.ActivityResultLauncher<String> galleryLauncher;
 
     @Override
@@ -53,9 +55,23 @@ public class CameraActivity extends AppCompatActivity {
 
         binding.btnCapture.setOnClickListener(v -> {
             if (!lastDetectedText.isEmpty()) {
-                saveAndOpen(lastDetectedText);
+                accumulatedText.append(lastDetectedText).append("\n\n---\n\n");
+                pageCount++;
+                binding.textPageCount.setText("Páginas: " + pageCount);
+                Toast.makeText(this, "Página " + pageCount + " añadida", Toast.LENGTH_SHORT).show();
+                lastDetectedText = ""; // Reset for next page
             } else {
                 Toast.makeText(this, "Apunta la cámara al texto primero", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.btnFinish.setOnClickListener(v -> {
+            if (accumulatedText.length() > 0) {
+                saveAndOpen(accumulatedText.toString().trim());
+            } else if (!lastDetectedText.isEmpty()) {
+                saveAndOpen(lastDetectedText);
+            } else {
+                Toast.makeText(this, "Captura algo primero", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -83,7 +99,7 @@ public class CameraActivity extends AppCompatActivity {
         String preview = text.length() > 30 ? text.substring(0, 30).trim() + "…" : text.trim();
         String title = "Escaneo " + titleDate;
 
-        DocumentEntry entry = new DocumentEntry(title, text, System.currentTimeMillis(), "Documento", "General");
+        DocumentEntry entry = new DocumentEntry(title, text, System.currentTimeMillis(), "Documento", "General", "");
 
         // Guardar en hilo de fondo, luego abrir el detalle
         dbExecutor.execute(() -> {
