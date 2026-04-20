@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ScanNote" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#14B8A6</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#0F172A</item>
+        <item name="colorOnPrimaryContainer">#E2E8F0</item>
+        <item name="colorSecondary">#6366F1</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#1E1B4B</item>
+        <item name="colorOnSecondaryContainer">#C7D2FE</item>
+        <item name="colorSurface">#0F172A</item>
+        <item name="colorOnSurface">#E2E8F0</item>
+        <item name="colorSurfaceContainer">#1A1A2E</item>
+        <item name="colorSurfaceContainerHigh">#1E1E3A</item>
+        <item name="colorSurfaceContainerLow">#12122A</item>
+        <item name="android:colorBackground">#0A0A1E</item>
+        <item name="colorOnBackground">#E2E8F0</item>
+        <item name="colorOutline">#334155</item>
+        <item name="colorOutlineVariant">#1E293B</item>
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
+        <item name="android:navigationBarColor">#0D0D1A</item>
+        <item name="android:statusBarColor">#0F172A</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+</resources>

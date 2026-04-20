@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acceso Seguro | ScanNote AI</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0072FF;
+            --bg: #050A18;
+            --card-bg: #0F172A;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            background: var(--bg);
+            color: var(--text-main);
+            background-image: radial-gradient(circle at 50% 50%, rgba(0, 114, 255, 0.05), transparent 70%);
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 3.5rem;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .logo-login {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem;
+        }
+
+        h2 { font-size: 2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        p { color: var(--text-muted); font-size: 1rem; margin-bottom: 2.5rem; }
+
+        .input-group { margin-bottom: 1.5rem; text-align: left; }
+        .input-group label { display: block; margin-bottom: 0.6rem; font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+        .input-group input { 
+            width: 100%; 
+            padding: 1rem 1.2rem; 
+            background: #050A18; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 12px; 
+            color: white; 
+            outline: none; 
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(0, 114, 255, 0.15); }
+
+        .btn-submit { 
+            width: 100%; 
+            padding: 1rem; 
+            background: linear-gradient(135deg, #00C6FF, #0072FF);
+            border: none; 
+            border-radius: 12px; 
+            color: white; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: 0.3s;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            box-shadow: 0 10px 20px rgba(0, 114, 255, 0.2);
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 15px 25px rgba(0, 114, 255, 0.3); }
+
+        .divider { margin: 2.5rem 0; position: relative; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .divider span { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: var(--card-bg); padding: 0 1.2rem; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; text-transform: uppercase; }
+
+        .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .social-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 12px; 
+            padding: 0.85rem; 
+            background: #050A18; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 12px; 
+            color: white; 
+            font-size: 0.9rem; 
+            cursor: pointer; 
+            transition: 0.3s;
+            font-weight: 600;
+        }
+        .social-btn:hover { background: #141E33; border-color: rgba(0, 114, 255, 0.3); }
+        .social-btn svg { width: 20px; height: 20px; }
+
+        .footer-links { margin-top: 2.5rem; font-size: 0.9rem; color: var(--text-muted); }
+        .footer-links a { color: var(--primary); text-decoration: none; font-weight: 600; transition: 0.3s; }
+        .footer-links a:hover { color: #00C6FF; }
+        
+        #message { margin-top: 1.2rem; font-size: 0.9rem; color: #F87171; min-height: 1.2rem; font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <img src="/assets/logo.svg" alt="ScanNote Logo" class="logo-login">
+        <h2>Hola de nuevo</h2>
+        <p>Inicia sesión para descargar ScanNote AI</p>
+
+        <div class="input-group">
+            <label>Correo Electrónico</label>
+            <input type="email" id="email" placeholder="tu@email.com">
+        </div>
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+        
+        <button class="btn-submit" id="btnSignIn">Entrar ahora</button>
+        
+        <div id="message"></div>
+
+        <div class="divider"><span>O acceder con</span></div>
+
+        <div class="social-btns">
+            <button class="social-btn" id="btnGoogle">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.48 10.92v3.28h7.84c-.24 1.84-.909 3.141-1.908 4.141-1.169 1.169-2.824 2.14-5.932 2.14-5.28 0-9.503-4.26-9.503-9.54s4.223-9.54 9.503-9.54c2.821 0 5.161 1.01 6.84 2.65l2.42-2.42C17.39 1.25 14.73 0 11.51 0 5.14 0 0 5.14 0 11.5s5.14 11.5 11.51 11.5c3.55 0 6.22-1.17 8.35-3.35 2.2-2.2 2.91-5.3 2.91-7.73 0-.74-.06-1.44-.19-2.1h-10.1z"/></svg>
+                Google
+            </button>
+            <button class="social-btn" id="btnFacebook">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                Facebook
+            </button>
+        </div>
+
+        <div class="footer-links">
+            ¿No tienes cuenta? <a href="#" id="btnSignUp">Regístrate gratis</a><br><br>
+            <a href="/">← Volver al inicio</a>
+        </div>
+    </div>
+
+    <script>
+        // Supabase configuration - TU URL Y KEY SE MANTIENEN IGUAL
+        const supabaseUrl = 'https://xbrabupyrvghvbmvojwg.supabase.co';
+        const supabaseAnonKey = 'sb_publishable_25MjemwrqFYZPtp_bDaeeg_C-a-0Zmh';
+        
+        // Inicialización correcta de Supabase
+        const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        const messageDiv = document.getElementById('message');
+
+        document.getElementById('btnGoogle').onclick = async () => {
+            const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: { redirectTo: window.location.origin + '/download-success' }
+            });
+            if (error) messageDiv.innerText = "Error: " + error.message;
+        };
+
+        document.getElementById('btnFacebook').onclick = async () => {
+            const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'facebook',
+                options: { redirectTo: window.location.origin + '/download-success' }
+            });
+            if (error) messageDiv.innerText = "Error: " + error.message;
+        };
+
+        document.getElementById('btnSignIn').onclick = async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if(!email || !password) { messageDiv.innerText = "Ingresa tus credenciales"; return; }
+            const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            if (error) messageDiv.innerText = "Error: " + error.message;
+            else window.location.href = '/download-success';
+        };
+
+        document.getElementById('btnSignUp').onclick = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            if (!email || !password) { messageDiv.innerText = "Completa los campos para el registro"; return; }
+            const { error } = await supabaseClient.auth.signUp({ email, password });
+            if (error) messageDiv.innerText = "Error: " + error.message;
+            else { 
+                messageDiv.style.color = "#10B981"; 
+                messageDiv.innerText = "¡Registro exitoso! Ya puedes entrar."; 
+            }
+        };
+    </script>
+</body>
+</html>

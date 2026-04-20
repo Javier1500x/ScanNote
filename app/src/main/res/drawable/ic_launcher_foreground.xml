@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Document body -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,24 L76,24 Q80,24 80,28 L80,80 Q80,84 76,84 L32,84 Q28,84 28,80 L28,28 Q28,24 32,24 Z"/>
+    <!-- Lines on document -->
+    <path
+        android:fillColor="#6750A4"
+        android:pathData="M38,40 L70,40 Q71,40 71,42 L71,44 Q71,46 70,46 L38,46 Q37,46 37,44 L37,42 Q37,40 38,40 Z"/>
+    <path
+        android:fillColor="#6750A4"
+        android:pathData="M38,52 L70,52 Q71,52 71,54 L71,56 Q71,58 70,58 L38,58 Q37,58 37,56 L37,54 Q37,52 38,52 Z"/>
+    <path
+        android:fillColor="#6750A4"
+        android:pathData="M38,64 L58,64 Q59,64 59,66 L59,68 Q59,70 58,70 L38,70 Q37,70 37,68 L37,66 Q37,64 38,64 Z"/>
+    <!-- Camera/scan circle -->
+    <path
+        android:fillColor="#6750A4"
+        android:pathData="M70,60 m-10,0 a10,10 0 1,0 20,0 a10,10 0 1,0 -20,0"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M70,60 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0"/>
+</vector>

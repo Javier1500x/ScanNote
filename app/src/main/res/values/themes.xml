@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.ScanNote" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#14B8A6</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#0F172A</item>
+        <item name="colorOnPrimaryContainer">#E2E8F0</item>
+        <item name="colorSecondary">#6366F1</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorSecondaryContainer">#1E1B4B</item>
+        <item name="colorOnSecondaryContainer">#C7D2FE</item>
+        <item name="colorSurface">#0F172A</item>
+        <item name="colorOnSurface">#E2E8F0</item>
+        <item name="colorSurfaceContainer">#1A1A2E</item>
+        <item name="colorSurfaceContainerHigh">#1E1E3A</item>
+        <item name="colorSurfaceContainerLow">#12122A</item>
+        <item name="android:colorBackground">#0A0A1E</item>
+        <item name="colorOnBackground">#E2E8F0</item>
+        <item name="colorOutline">#334155</item>
+        <item name="colorOutlineVariant">#1E293B</item>
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
+        <item name="android:navigationBarColor">#0D0D1A</item>
+        <item name="android:statusBarColor">#0F172A</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.ScanNote.HeadlineLarge</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.ScanNote.HeadlineMedium</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.ScanNote.BodyLarge</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.ScanNote.BodyMedium</item>
+    </style>
+
+    <style name="TextAppearance.ScanNote.HeadlineLarge" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="android:textColor">#F1F5F9</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">-0.02</item>
+    </style>
+
+    <style name="TextAppearance.ScanNote.HeadlineMedium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:textColor">#F1F5F9</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.ScanNote.BodyLarge" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:textColor">#CBD5E1</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingMultiplier">1.6</item>
+    </style>
+
+    <style name="TextAppearance.ScanNote.BodyMedium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">#94A3B8</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:lineSpacingMultiplier">1.5</item>
+    </style>
+
+    <style name="Widget.ScanNote.AIChipButton" parent="Widget.Material3.Button.TonalButton">
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textSize">13sp</item>
+        <item name="iconTint">#FFFFFF</item>
+        <item name="iconSize">18dp</item>
+        <item name="iconPadding">8dp</item>
+    </style>
+</resources>

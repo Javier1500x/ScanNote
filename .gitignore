@@ -1,0 +1,17 @@
+# Android
+.gradle/
+build/
+local.properties
+.idea/
+*.iml
+.gradle-tmp/
+gradle_tmp_home/
+
+# Node.js
+node_modules/
+.env
+
+# Misc
+.DS_Store
+build_out.txt
+.vscode/

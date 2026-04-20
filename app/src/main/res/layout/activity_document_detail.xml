@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient">
+
+    <!-- Top bar -->
+    <LinearLayout
+        android:id="@+id/topDetailBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/btn_back_detail"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Atrás"
+            android:tint="#94A3B8"
+            android:src="@android:drawable/ic_menu_revert" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Escaneo"
+            android:textColor="#F1F5F9"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/text_word_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 palabras"
+            android:textColor="#64748B"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="68dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Fecha y categoría -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <TextView
+                    android:id="@+id/text_scan_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Hoy"
+                    android:textColor="#64748B"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/chip_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Documento"
+                    android:textColor="#14B8A6"
+                    android:textSize="11sp"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp"
+                    android:background="#1414B8A6"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+
+            <!-- Tarjeta de texto escaneado -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardBackgroundColor="#1A1A2E"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="#2E2E4E"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="14dp"
+                        android:paddingBottom="4dp"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Texto Escaneado"
+                            android:textColor="#64748B"
+                            android:textSize="11sp"
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.08" />
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/ic_ai_correct"
+                            android:tint="#475569"
+                            android:contentDescription="Editar" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/edit_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:gravity="top"
+                        android:hint="Texto escaneado..."
+                        android:minLines="8"
+                        android:padding="16dp"
+                        android:paddingTop="8dp"
+                        android:textColor="#CBD5E1"
+                        android:textColorHint="#334155"
+                        android:textSize="15sp"
+                        android:lineSpacingMultiplier="1.6"
+                        android:fontFamily="sans-serif" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Sección herramientas IA -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="HERRAMIENTAS IA"
+                android:textColor="#475569"
+                android:textSize="11sp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="10dp" />
+
+            <!-- Fila 1 de botones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_summarize"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:text="Resumir"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_summarize"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#14B8A6"
+                    app:strokeColor="#14B8A640"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_study"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="Estudiar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_study"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#6366F1"
+                    app:strokeColor="#6366F140"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <!-- Fila 2 de botones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_correct"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:text="Corregir"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_correct"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#F59E0B"
+                    app:strokeColor="#F59E0B40"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_keywords"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="Palabras clave"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_keywords"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#EC4899"
+                    app:strokeColor="#EC489940"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <!-- Fila 3 de botones -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_translate"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:text="Traducir"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_translate"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#10B981"
+                    app:strokeColor="#10B98140"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_tts"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="Escuchar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_listen"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#8B5CF6"
+                    app:strokeColor="#8B5CF640"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <!-- Nueva Fila: Exportar y Preguntar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="20dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_export_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="6dp"
+                    android:text="PDF / Compartir"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_pdf"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#EF4444"
+                    app:strokeColor="#EF444440"
+                    app:strokeWidth="1dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_ask_ai"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="Preguntar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#1E293B"
+                    app:cornerRadius="14dp"
+                    app:icon="@drawable/ic_ai_ask"
+                    app:iconSize="18dp"
+                    app:iconPadding="8dp"
+                    app:iconTint="#FCD34D"
+                    app:strokeColor="#FCD34D40"
+                    app:strokeWidth="1dp" />
+            </LinearLayout>
+
+            <!-- Campo de chat (inicialmente oculto) -->
+            <LinearLayout
+                android:id="@+id/layout_ask_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/edit_ask_question"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_search"
+                    android:hint="Haz una pregunta..."
+                    android:padding="12dp"
+                    android:textColor="#F1F5F9"
+                    android:textColorHint="#475569"
+                    android:textSize="14sp" />
+
+                <ImageButton
+                    android:id="@+id/btn_send_question"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_round_button"
+                    android:src="@android:drawable/ic_menu_send"
+                    android:tint="#FFFFFF" />
+            </LinearLayout>
+
+            <!-- Output de IA -->
+            <LinearLayout
+                android:id="@+id/layout_ai_output"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_ai_output"
+                android:padding="16dp"
+                android:layout_marginBottom="24dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/text_ai_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Resultado IA"
+                        android:textColor="#14B8A6"
+                        android:textSize="12sp"
+                        android:fontFamily="sans-serif-medium"
+                        android:letterSpacing="0.05" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="✦ IA"
+                        android:textColor="#6366F1"
+                        android:textSize="11sp"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        android:background="#2020204E"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
+
+                <WebView
+                    android:id="@+id/webview_ai_output"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="200dp"
+                    android:background="@android:color/transparent" />
+            </LinearLayout>
+
+            <!-- Progress -->
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progress_ai"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:indeterminate="true"
+                app:indicatorColor="#14B8A6"
+                app:trackColor="#1E293B"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

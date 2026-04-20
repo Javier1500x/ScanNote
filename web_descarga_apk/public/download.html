@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar ScanNote AI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0072FF;
+            --bg: #050A18;
+            --card-bg: #0F172A;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        
+        body { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            background: var(--bg);
+            color: var(--text-main);
+            background-image: radial-gradient(circle at 50% 50%, rgba(0, 114, 255, 0.05), transparent 70%);
+        }
+
+        .download-container {
+            background: var(--card-bg);
+            padding: 4rem;
+            border-radius: 32px;
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        .logo-small {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 2rem;
+        }
+
+        h1 { font-size: 2.2rem; margin-bottom: 0.5rem; font-weight: 700; }
+        .version { color: var(--text-muted); font-size: 1rem; margin-bottom: 2.5rem; display: block; font-weight: 500; }
+
+        .info-box {
+            background: rgba(0, 114, 255, 0.05);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: left;
+            margin-bottom: 2.5rem;
+            font-size: 1rem;
+            line-height: 1.7;
+            border-left: 4px solid var(--primary);
+            color: var(--text-main);
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, #00C6FF, #0072FF);
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-weight: 700;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.3);
+            font-size: 1.1rem;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 114, 255, 0.4);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item span { display: block; }
+        .stat-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; }
+        .stat-value { font-weight: 800; font-size: 1.3rem; margin-top: 8px; color: var(--white); }
+
+        .back-link { margin-top: 2.5rem; display: block; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
+        .back-link:hover { color: var(--primary-light); }
+    </style>
+</head>
+<body>
+    <div class="download-container">
+        <img src="/assets/logo.svg" alt="ScanNote" class="logo-small">
+        <h1>ScanNote AI Pro</h1>
+        <span class="version">v1.5.0 (Estable) • 25.8 MB</span>
+
+        <div class="info-box">
+            <strong>¡Acceso concedido!</strong><br>
+            Ya puedes descargar la última versión de ScanNote. Disfruta de todas las funciones de IA, escaneo OCR ilimitado y el nuevo tutor de exámenes interactivo.
+        </div>
+
+        <a href="#" class="btn-download">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            Comenzar descarga
+        </a>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-label">Usuarios</span>
+                <span class="stat-value">12.5k</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Rating</span>
+                <span class="stat-value">5.0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Virus-Free</span>
+                <span class="stat-value">Si</span>
+            </div>
+        </div>
+
+        <a href="/" class="back-link">← Cerrar Sesión y Volver</a>
+    </div>
+</body>
+</html>
