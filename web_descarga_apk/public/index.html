@@ -35,7 +35,7 @@
             position: fixed;
             top: 0;
             width: 100%;
-            padding: 1rem 5%;
+            padding: 1rem 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -48,22 +48,22 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
             font-weight: 700;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: var(--white);
             text-decoration: none;
         }
 
         .logo img {
-            width: 32px;
-            height: 32px;
+            width: 38px;
+            height: 38px;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 2.5rem;
             align-items: center;
         }
 
@@ -72,20 +72,21 @@
             color: var(--text-muted);
             font-weight: 500;
             transition: 0.3s;
-            font-size: 0.85rem;
+            font-size: 0.95rem;
         }
 
         .btn-nav {
             background: linear-gradient(135deg, var(--primary-light), var(--primary));
             color: var(--white) !important;
-            padding: 0.5rem 1.2rem;
+            padding: 0.7rem 1.8rem;
             border-radius: 50px;
             font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
         }
 
         /* Hero Section */
         .hero {
-            padding: 10rem 8% 5rem;
+            padding: 12rem 8% 8rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -95,29 +96,29 @@
 
         .hero-content {
             flex: 1;
-            max-width: 600px;
+            max-width: 650px;
         }
 
         .hero-tag {
             background: rgba(0, 114, 255, 0.1);
             color: var(--primary-light);
-            padding: 0.4rem 1rem;
+            padding: 0.5rem 1.2rem;
             border-radius: 50px;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
             display: inline-block;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
             border: 1px solid rgba(0, 114, 255, 0.2);
         }
 
         .hero h1 {
-            font-size: 4rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
+            font-size: 4.5rem;
+            line-height: 1;
+            margin-bottom: 2rem;
             font-weight: 800;
-            letter-spacing: -1.5px;
+            letter-spacing: -2px;
         }
 
         .hero h1 span {
@@ -127,23 +128,29 @@
         }
 
         .hero p {
-            font-size: 1.15rem;
+            font-size: 1.3rem;
             color: var(--text-muted);
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
+            max-width: 550px;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--primary-light), var(--primary));
             color: var(--white);
-            padding: 1rem 2rem;
-            border-radius: 14px;
+            padding: 1.2rem 2.5rem;
+            border-radius: 16px;
             text-decoration: none;
             font-weight: 700;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            transition: 0.3s;
-            box-shadow: 0 8px 25px rgba(0, 114, 255, 0.3);
+            gap: 12px;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0, 114, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 114, 255, 0.4);
         }
 
         .hero-img {
@@ -154,41 +161,106 @@
         }
 
         .phone-mockup {
-            width: 280px;
-            height: 560px;
+            width: 320px;
+            height: 650px;
             background: #1E293B;
-            border-radius: 40px;
-            border: 6px solid #334155;
+            border-radius: 45px;
+            border: 8px solid #334155;
             position: relative;
-            transform: rotateX(5deg) rotateY(-15deg);
-            box-shadow: -15px 15px 40px rgba(0,0,0,0.5);
+            transform: rotateX(10deg) rotateY(-20deg) rotateZ(5deg);
+            box-shadow: -20px 20px 60px rgba(0,0,0,0.6);
+            overflow: hidden;
         }
 
-        /* Features */
-        .features { padding: 6rem 8%; text-align: center; }
-        .features h2 { font-size: 2.5rem; margin-bottom: 4rem; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-        .feature-card { background: var(--card-bg); padding: 3rem 2rem; border-radius: 28px; border: 1px solid rgba(255, 255, 255, 0.03); text-align: left; transition: 0.3s; }
-        .feature-card:hover { transform: translateY(-10px); border-color: var(--primary-light); }
+        .phone-screen {
+            background: var(--bg);
+            height: 100%;
+            width: 100%;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-        /* AI Demo */
-        .ai-demo { padding: 6rem 8%; display: flex; align-items: center; gap: 4rem; flex-wrap: wrap; }
-        .demo-text, .demo-visual { flex: 1; min-width: 300px; }
-        .ai-card { background: var(--card-bg); border-radius: 24px; padding: 2rem; border: 1px solid var(--primary); }
+        .screen-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .ai-badge {
+            background: var(--primary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 8%;
+            text-align: center;
+        }
+
+        .features h2 {
+            font-size: 3rem;
+            margin-bottom: 5rem;
+            font-weight: 800;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            padding: 4rem 2.5rem;
+            border-radius: 32px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: 0.4s;
+            text-align: left;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--primary-light);
+        }
 
         /* Footer */
-        footer { padding: 4rem 8% 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 3rem; color: var(--text-muted); }
-        .footer-logo { display: flex; align-items: center; gap: 10px; color: white; font-weight: 700; text-decoration: none; font-size: 1.3rem; margin-bottom: 1rem; }
+        footer {
+            padding: 6rem 8% 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 3rem;
+            color: var(--text-muted);
+        }
 
-        @media (max-width: 768px) {
-            header { padding: 0.8rem 5%; }
-            nav ul { display: none; } /* En móvil simplificamos el nav */
-            .hero { flex-direction: column; text-align: center; padding-top: 8rem; }
-            .hero h1 { font-size: 2.8rem; }
-            .hero-img { display: none; } /* Ocultamos el mockup en móvil para priorizar texto */
-            .ai-demo { flex-direction: column; text-align: center; }
-            .features h2 { font-size: 2rem; }
-            footer { flex-direction: column; text-align: center; align-items: center; }
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--white);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .hero { flex-direction: column; text-align: center; padding-top: 10rem; }
+            .hero-content { margin-bottom: 5rem; display: flex; flex-direction: column; align-items: center; }
+            .hero-img { display: none; }
+            .hero h1 { font-size: 3rem; }
+            footer { text-align: center; justify-content: center; }
         }
     </style>
 </head>
@@ -201,7 +273,7 @@
         <nav>
             <ul>
                 <li><a href="#features">Funciones</a></li>
-                <li><a href="/login" class="btn-nav">Descargar</a></li>
+                <li><a href="/login" class="btn-nav">Prueba la APK</a></li>
             </ul>
         </nav>
     </header>
@@ -210,45 +282,71 @@
         <div class="hero-content">
             <span class="hero-tag">Impulsado por Gemini 2.5 Flash</span>
             <h1>Tus notas, <span>evolucionadas.</span></h1>
-            <p>Transforma tus escaneos y PDFs en resúmenes inteligentes y cuestionarios de estudio al instante.</p>
-            <a href="/login" class="btn-primary">Descargar ScanNote</a>
+            <p>
+                ScanNote utiliza IA de última generación para transformar tus escaneos y PDFs en resúmenes inteligentes, cuestionarios de estudio y contenido corregido al instante.
+            </p>
+            <div class="hero-btns">
+                <a href="/login" class="btn-primary">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    Descargar ScanNote
+                </a>
+            </div>
         </div>
         <div class="hero-img">
             <div class="phone-mockup">
-                <div style="background: var(--bg); height: 100%; width: 100%; border-radius: 34px; padding: 20px;">
-                    <div style="height: 15px; background: #334155; border-radius: 10px; width: 40%; margin-bottom: 20px;"></div>
-                    <div style="height: 100px; background: var(--card-bg); border-radius: 15px; border: 1px solid var(--primary);"></div>
+                <div class="phone-screen">
+                    <div style="height: 20px; background: #334155; border-radius: 10px; width: 40%;"></div>
+                    <div class="screen-card">
+                        <div class="ai-badge">IA Resumen</div>
+                        <div style="height: 8px; background: #334155; border-radius: 4px; width: 90%; margin-bottom: 8px;"></div>
+                        <div style="height: 8px; background: #334155; border-radius: 4px; width: 70%; margin-bottom: 8px;"></div>
+                        <div style="height: 8px; background: #334155; border-radius: 4px; width: 85%;"></div>
+                    </div>
+                    <div class="screen-card" style="border-left: 3px solid #00C6FF;">
+                        <h4 style="font-size: 0.8rem; margin-bottom: 10px; color: white;">Pregunta de Examen</h4>
+                        <div style="padding: 8px; background: #050A18; border-radius: 8px; font-size: 0.6rem; margin-bottom: 5px; color: #94A3B8;">Opción A: Concepto clave</div>
+                        <div style="padding: 8px; background: #050A18; border-radius: 8px; font-size: 0.6rem; color: #94A3B8;">Opción B: Respuesta correcta</div>
+                    </div>
+                    <div style="flex-grow: 1; display: flex; align-items: flex-end; justify-content: center;">
+                        <div style="width: 60px; height: 60px; border-radius: 30px; background: linear-gradient(135deg, #00C6FF, #0072FF); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(0, 114, 255, 0.5);">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="features" id="features">
-        <h2>Potencial ilimitado</h2>
+        <h2>Potencial ilimitado para estudiar</h2>
         <div class="features-grid">
             <div class="feature-card">
-                <h3>Escaneo Inteligente</h3>
-                <p>Captura texto de cualquier papel con corrección OCR automática.</p>
+                <h3>Escaneo OCR Inteligente</h3>
+                <p>Captura texto de cualquier papel o pizarra. Nuestra IA corrige errores de lectura automáticamente para una fidelidad total.</p>
             </div>
             <div class="feature-card">
                 <h3>Lectura de PDFs</h3>
-                <p>Extrae conceptos clave de tus libros digitales en segundos.</p>
+                <p>Importa tus libros y documentos PDF. Extrae el contenido y deja que la IA organice los conceptos clave por ti.</p>
             </div>
             <div class="feature-card">
-                <h3>Exámenes IA</h3>
-                <p>Genera preguntas para estudiar basadas en tus propios apuntes.</p>
+                <h3>Exámenes Interactivos</h3>
+                <p>¿Listo para el examen? ScanNote genera preguntas de opción múltiple basadas en tus notas para ponerte a prueba.</p>
             </div>
         </div>
     </section>
 
-    <footer id="footer">
+    <footer>
         <div>
-            <a href="#" class="footer-logo"><img src="/assets/logo.svg" alt="Logo">ScanNote</a>
-            <p>&copy; 2026 ScanNote AI Labs.</p>
+            <a href="#" class="footer-logo">
+                <img src="/assets/logo.svg" alt="Logo">
+                ScanNote
+            </a>
+            <p>La herramienta definitiva para estudiantes modernos.</p>
+            <p style="margin-top: 1rem;">&copy; 2026 ScanNote AI Labs.</p>
         </div>
-        <nav>
-            <a href="/privacy.html" style="color: var(--text-muted); margin: 0 10px;">Privacidad</a>
-            <a href="/login" style="color: var(--text-muted); margin: 0 10px;">Login</a>
+        <nav style="display: flex; gap: 2rem;">
+            <a href="/privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacidad</a>
+            <a href="/login.html" style="color: var(--text-muted); text-decoration: none;">Login</a>
         </nav>
     </footer>
 </body>
