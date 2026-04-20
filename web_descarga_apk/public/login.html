@@ -41,13 +41,52 @@
         p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
 
         .input-group { margin-bottom: 1.2rem; text-align: left; }
-        .input-group label { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: var(--text-muted); }
-        .input-group input { width: 100%; padding: 0.8rem; background: #050A18; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: white; }
+        .input-group input { 
+            width: 100%; 
+            padding: 0.8rem; 
+            background: #050A18; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 10px; 
+            color: white; 
+            outline: none;
+        }
+        .input-group input:focus { border-color: var(--primary); }
 
-        .btn-submit { width: 100%; padding: 0.8rem; background: linear-gradient(135deg, #00C6FF, #0072FF); border: none; border-radius: 10px; color: white; font-weight: 700; cursor: pointer; margin-top: 1rem; }
+        .btn-submit { 
+            width: 100%; 
+            padding: 0.8rem; 
+            background: linear-gradient(135deg, #00C6FF, #0072FF); 
+            border: none; 
+            border-radius: 10px; 
+            color: white; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 1rem; 
+        }
 
         .social-btns { display: grid; grid-template-columns: 1fr; gap: 0.8rem; margin-top: 1.5rem; }
-        .social-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 0.8rem; background: #050A18; border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: white; cursor: pointer; }
+        .social-btn { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 10px; 
+            padding: 0.8rem; 
+            background: #050A18; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 10px; 
+            color: white; 
+            cursor: pointer; 
+            font-size: 0.9rem;
+        }
+
+        .auth-toggle { margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
+        .auth-toggle span { color: var(--primary); cursor: pointer; font-weight: 600; }
+
+        .forgot-password { margin-top: 1rem; font-size: 0.8rem; color: var(--text-muted); cursor: pointer; text-decoration: underline; }
+
+        #message { margin-top: 15px; font-size: 0.85rem; min-height: 1.2rem; }
+        .error { color: #ff4444; }
+        .success { color: #10B981; }
 
         @media (max-width: 480px) {
             .login-card { padding: 2rem 1.5rem; }
@@ -57,8 +96,8 @@
 <body>
     <div class="login-card">
         <img src="/assets/logo.svg" alt="ScanNote Logo" class="logo-login">
-        <h2>Bienvenido</h2>
-        <p>Inicia sesión para descargar la APK</p>
+        <h2 id="auth-title">Bienvenido</h2>
+        <p id="auth-desc">Inicia sesión para descargar la APK</p>
 
         <div class="input-group">
             <input type="email" id="email" placeholder="Correo electrónico">
@@ -67,14 +106,26 @@
             <input type="password" id="password" placeholder="Contraseña">
         </div>
         
-        <button class="btn-submit" id="btnSignIn">Entrar</button>
-        <div id="message" style="margin-top: 10px; font-size: 0.8rem; color: #ff4444;"></div>
+        <button class="btn-submit" id="btnMain">Entrar</button>
+        
+        <div id="forgot-pw" class="forgot-password">¿Olvidaste tu contraseña?</div>
+        
+        <div id="message"></div>
 
-        <div style="margin: 1.5rem 0; color: var(--text-muted); font-size: 0.8rem;">O continuar con</div>
+        <div id="social-section">
+            <div style="margin: 1.5rem 0; color: var(--text-muted); font-size: 0.8rem;">O continuar con</div>
+            <div class="social-btns">
+                <button class="social-btn" id="btnGoogle">Google</button>
+                <button class="social-btn" id="btnFacebook">Facebook</button>
+            </div>
+        </div>
 
-        <div class="social-btns">
-            <button class="social-btn" id="btnGoogle">Google</button>
-            <button class="social-btn" id="btnFacebook">Facebook</button>
+        <div class="auth-toggle" id="auth-toggle-wrapper">
+            ¿No tienes cuenta? <span id="toggle-auth">Regístrate gratis</span>
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <a href="/" style="color: var(--text-muted); text-decoration: none; font-size: 0.85rem;">← Volver al inicio</a>
         </div>
     </div>
 
@@ -83,16 +134,90 @@
         const supabaseAnonKey = 'sb_publishable_25MjemwrqFYZPtp_bDaeeg_C-a-0Zmh';
         const supabaseClient = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-        document.getElementById('btnGoogle').onclick = () => supabaseClient.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/download-success' } });
-        document.getElementById('btnFacebook').onclick = () => supabaseClient.auth.signInWithOAuth({ provider: 'facebook', options: { redirectTo: window.location.origin + '/download-success' } });
-        
-        document.getElementById('btnSignIn').onclick = async () => {
+        const btnMain = document.getElementById('btnMain');
+        const authTitle = document.getElementById('auth-title');
+        const authDesc = document.getElementById('auth-desc');
+        const toggleAuth = document.getElementById('toggle-auth');
+        const authToggleWrapper = document.getElementById('auth-toggle-wrapper');
+        const messageDiv = document.getElementById('message');
+        const forgotPw = document.getElementById('forgot-pw');
+        const socialSection = document.getElementById('social-section');
+
+        let isLogin = true;
+
+        // Cambiar entre Login y Registro
+        toggleAuth.onclick = () => {
+            isLogin = !isLogin;
+            if (isLogin) {
+                authTitle.innerText = "Bienvenido";
+                authDesc.innerText = "Inicia sesión para descargar la APK";
+                btnMain.innerText = "Entrar";
+                authToggleWrapper.innerHTML = '¿No tienes cuenta? <span id="toggle-auth">Regístrate gratis</span>';
+                forgotPw.style.display = "block";
+                socialSection.style.display = "block";
+            } else {
+                authTitle.innerText = "Crear Cuenta";
+                authDesc.innerText = "Únete a ScanNote para empezar a estudiar con IA";
+                btnMain.innerText = "Registrarse";
+                authToggleWrapper.innerHTML = '¿Ya tienes cuenta? <span id="toggle-auth">Inicia sesión</span>';
+                forgotPw.style.display = "none";
+                socialSection.style.display = "none";
+            }
+            // Re-vincular el evento ya que innerHTML borra el listener
+            document.getElementById('toggle-auth').onclick = toggleAuth.onclick;
+            messageDiv.innerText = "";
+        };
+
+        // Lógica principal (Entrar o Registrar)
+        btnMain.onclick = async () => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
-            if (error) document.getElementById('message').innerText = error.message;
-            else window.location.href = '/download-success';
+            messageDiv.className = "";
+            messageDiv.innerText = "Procesando...";
+
+            if (isLogin) {
+                const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) {
+                    messageDiv.className = "error";
+                    messageDiv.innerText = "Error: " + error.message;
+                } else {
+                    window.location.href = '/download-success';
+                }
+            } else {
+                const { error } = await supabaseClient.auth.signUp({ email, password });
+                if (error) {
+                    messageDiv.className = "error";
+                    messageDiv.innerText = "Error: " + error.message;
+                } else {
+                    messageDiv.className = "success";
+                    messageDiv.innerText = "¡Registro exitoso! Revisa tu email para confirmar tu cuenta.";
+                }
+            }
         };
+
+        // Recuperar Contraseña
+        forgotPw.onclick = async () => {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                messageDiv.className = "error";
+                messageDiv.innerText = "Introduce tu email para recuperar la clave.";
+                return;
+            }
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin + '/login.html',
+            });
+            if (error) {
+                messageDiv.className = "error";
+                messageDiv.innerText = "Error: " + error.message;
+            } else {
+                messageDiv.className = "success";
+                messageDiv.innerText = "Se ha enviado un enlace de recuperación a tu email.";
+            }
+        };
+
+        // Social Logins
+        document.getElementById('btnGoogle').onclick = () => supabaseClient.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.origin + '/download-success' } });
+        document.getElementById('btnFacebook').onclick = () => supabaseClient.auth.signInWithOAuth({ provider: 'facebook', options: { redirectTo: window.location.origin + '/download-success' } });
     </script>
 </body>
 </html>
